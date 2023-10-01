@@ -1,0 +1,43 @@
+{
+  "name": "comments-scraper",
+  "version": "1.0.0",
+  "description": "Comments scraper for youtube.com",
+  "keywords": [
+    "coffeescript",
+    "youtube-api",
+    "javascript",
+    "webpack"
+  ],
+  "type": "module",
+  "main": "./app/dist/main.js",
+  "author": {
+    "name": "fxhxyz4",
+    "email": "fxhxyz@proton.me",
+    "url": "https://fxhxyz.vercel.app/"
+  },
+  "homepage": "https://github.com/fxhxyz4/comments-scraper",
+  "bugs": "https://github.com/fxhxyz4/comments-scraper/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fxhxyz4/comments-scraper.git"
+  },
+  "maintainers": [
+    {
+      "name": "fxhxyz4",
+      "email": "fxhxyz@proton.me"
+    }
+  ],
+  "license": "MIT",
+  "scripts": {
+    "webpack": "webpack -c ./webpack.config.js --mode='production'"
+  },
+  "devDependencies": {
+    "coffee-loader": "4.0.0",
+    "coffeescript": "2.7.0",
+    "webpack": "5.88.2",
+    "webpack-cli": "5.1.4"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
