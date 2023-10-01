@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "comments-scraper",
+  "description": "Comments scraper for youtube.com",
+  "version": "1.0.0",
+  "author": "fxhxyz",
+  "homepage_url": "https://fxhxyz4.github.io/comments-scraper/",
+  "action": {
+    "default_title": "comments-scraper",
+    "default_lang": "en",
+    "default_popup": "./popup.html"
+  },
+  "permissions": ["downloads"]
+}
