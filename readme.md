@@ -48,4 +48,4 @@ $ npm run webpack
 
 #
 
-### License: [MIT](./license.md)
+### License: [MIT](https://fxhxyz.mit-license.org)
