@@ -4,12 +4,6 @@
 
 #
 
-### TODO:
-
-- [comment thread replies](https://stackoverflow.com/questions/31546995/youtube-data-api-v3-commentthread-call-doesnt-give-replies-for-some-comment-th)
-
-#
-
 ### installation
 
 ```git
@@ -38,6 +32,12 @@ $ npm install
 ```
 $ npm run webpack
 ```
+
+#
+
+### TODO:
+
+- [comment thread replies](https://stackoverflow.com/questions/31546995/youtube-data-api-v3-commentthread-call-doesnt-give-replies-for-some-comment-th)
 
 #
 
