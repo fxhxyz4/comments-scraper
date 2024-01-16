@@ -32,7 +32,7 @@
     "webpack": "webpack -c ./webpack.config.js --mode='production'"
   },
   "devDependencies": {
-    "coffee-loader": "4.0.0",
+    "coffee-loader": "5.0.0",
     "coffeescript": "2.7.0",
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4"
