@@ -27,17 +27,27 @@ $ npm install
 
 #
 
-### webpack
+### dev
 
 ```
-$ npm run webpack
+$ npm run dev
+```
+
+- [x] for disabling csp eval error - devtool: false in webpack config
+
+#
+
+### prod
+
+```
+$ npm run prod
 ```
 
 #
 
 ### TODO:
 
-- [comment thread replies](https://stackoverflow.com/questions/31546995/youtube-data-api-v3-commentthread-call-doesnt-give-replies-for-some-comment-th)
+- [x] [comment thread replies](https://stackoverflow.com/questions/31546995/youtube-data-api-v3-commentthread-call-doesnt-give-replies-for-some-comment-th)
 
 #
 
