@@ -12,6 +12,7 @@ const client = {
   experiments: {
     topLevelAwait: true,
   },
+  devtool: false,
   module: {
     rules: [
       {
