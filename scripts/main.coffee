@@ -1,12 +1,23 @@
 do ->
   input = document.getElementById('url')
   form = document.querySelector('.form')
+  btn = document.querySelector('.btn')
+  api = document.getElementById('api')
 
-  API_KEY = 'YOUR-API-KEY'
-  BASE_URL = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId'
+  api.value = localStorage.getItem('API_KEY')
+
+  DATE = new Date().toISOString().split('T')[0]
+  TOP_STRING = ""
+
+  API_KEY = ''
+  BASE_URL = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&'
 
   form.addEventListener 'submit', (e) ->
     e.preventDefault()
+
+    localStorage.setItem('API_KEY', api.value.trim())
+
+    API_KEY = localStorage.getItem('API_KEY')
 
     videoUrl = input.value.trim()
     include = 'youtube.com'
@@ -19,45 +30,66 @@ do ->
     fetchData videoUrl
 
   fetchData = (videoUrl) ->
-    videoId = getVideoIdFromUrl videoUrl
-    date = new Date().toISOString().split('T')[0]
+    getVideoIdFromUrl(videoUrl)
+      .then (videoId) ->
+        nextPageToken = null
+        comments = []
 
-    nextPageToken = null
-    comments = []
+        fetchComments = ->
+          url = "#{BASE_URL}videoId=#{videoId}&key=#{API_KEY}"
+          url += "&pageToken=#{nextPageToken}" if nextPageToken
+          url += "&maxResults=100"
 
-    fetchComments = ->
-      url = "#{BASE_URL}=#{videoId}&key=#{API_KEY}"
-      url += "&pageToken=#{nextPageToken}" if nextPageToken
-      url += "&maxResults=100"
+          fetch(url)
+            .then (r) -> r.json()
+            .then (d) ->
+              items = d.items
+              nextToken = d.nextPageToken
 
-      fetch(url)
-        .then (r) -> r.json()
-        .then (d) ->
-          items = d.items
-          nextToken = d.nextPageToken
+              comments.push items...
 
-          comments.push items...
+              if nextToken
+                nextPageToken = nextToken
+                fetchComments()
+              else
+                processThread(comments)
 
-          if nextToken
-            nextPageToken = nextToken
-            do fetchComments
-          else
-            topStrings = comments.map (item) ->
-              {authorDisplayName, textOriginal, likeCount} = item.snippet.topLevelComment.snippet
-              cleanedText = textOriginal.replace(/\n/g, '')
-              "#{authorDisplayName},#{cleanedText},#{likeCount}"
-            .join('\n')
+        fetchComments()
 
-            saveAndDownload topStrings, date
+  processThread = (comments) ->
+    processThreadComments(comments)
 
-    do fetchComments
+    for comment in comments
+      if comment.snippet.totalReplyCount
+        { replies } = comment
+        processThreadReplies(replies)
+
+    saveAndDownload()
+
+  processThreadComments = (comments) ->
+    topComments = comments.map (i) ->
+      { authorDisplayName, textOriginal, likeCount } = i.snippet.topLevelComment.snippet
+      cleanedText = textOriginal.replace(/\n/g, '')
+
+      TOP_STRING += "#{authorDisplayName},#{cleanedText},#{likeCount}"
+      TOP_STRING += "\n"
+
+  processThreadReplies = (replies) ->
+    topReplies = replies.comments.map (i) ->
+      { authorDisplayName, textOriginal, likeCount } = i.snippet
+      cleanedText = textOriginal.replace(/\n/g, '')
+
+      TOP_STRING += "#{authorDisplayName},#{cleanedText},#{likeCount}"
+      TOP_STRING += "\n"
 
   getVideoIdFromUrl = (url) ->
-    new URLSearchParams(new URL(url).search).get('v')
+    return new Promise (resolve, reject) ->
+      videoId = new URLSearchParams(new URL(url).search).get('v')
+      resolve(videoId)
 
-  saveAndDownload = (comments, date) ->
-    filename = "comments-#{date}.csv"
-    blob = new Blob([comments], { type: 'text/csv' })
+  saveAndDownload = () ->
+    filename = "comments-#{DATE}.csv"
+    blob = new Blob([TOP_STRING], { type: 'text/csv' })
 
     url = URL.createObjectURL(blob)
 
