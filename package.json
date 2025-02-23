@@ -38,8 +38,8 @@
     "coffeescript": "2.7.0",
     "prettier": "^3.2.5",
     "prettier-plugin-coffeescript": "^0.1.5",
+    "webpack-cli": "6.0.1"
     "webpack": "5.98.0",
-    "webpack-cli": "5.1.4"
   },
   "engines": {
     "node": "20.x"
