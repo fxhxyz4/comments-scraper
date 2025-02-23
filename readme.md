@@ -6,41 +6,46 @@
 
 ### installation
 
-```git
-$ git clone https://github.com/fxhxyz4/comments-scraper.git
-$ cd comments-scraper
+```bash
+git clone https://github.com/fxhxyz4/comments-scraper.git && cd comments-scraper && npm i
 ```
 
 #
 
-### dependencies
-
-```
-$ npm install
-```
-
-#
-
-### create API KEY
+### create google API KEY
 
 - [google console](https://console.cloud.google.com/apis/dashboard)
 
 #
 
-### dev
+### development
 
-```
-$ npm run dev
+```bash
+npm run dev
 ```
 
-- [x] for disabling csp eval error - devtool: false in webpack config
+- [x] for **disabling** csp eval error - devtool: _false in webpack config_
 
 #
 
-### prod
+### production build
 
+- **npm**
+
+```bash
+npm run prettier && npm run prod
 ```
-$ npm run prod
+
+- **shell**
+
+```bash
+sudo chmod +x ./build.sh & ./build.sh
+```
+
+- **batch**
+
+```bash
+./build.bat
 ```
 
 #
