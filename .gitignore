@@ -1,6 +1,8 @@
 # misc
+dist
 .DS_Store
 text.txt
+package-lock.*
 yarn.*
 *.LICENSE.*
 
