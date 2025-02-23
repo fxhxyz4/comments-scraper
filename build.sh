@@ -1,3 +1,3 @@
 #!/bin/sh
 
-yarn prettier && yarn prod
+npm run prettier && npm run prod
