@@ -2,12 +2,31 @@ root = true
 
 [*]
 charset = utf-8
-indent_style = space
+indent_style = tab
+tab_width = 2
 indent_size = 2
 end_of_line = lf
 max_line_length = 120
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[README.md]
+# Html, svg
+[*.{html,svg}]
+indent_style = tab
+
+# Markdown
+[*.md]
 trim_trailing_whitespace = false
+
+# JavaScript/TypeScript
+[*.{json,yml,js,jsx,ts,tsx}]
+indent_style = space
+indent_size = 2
+
+# Ignore minified files
+[*.min.*]
+indent_style = ignore
+trim_trailing_whitespace = false
+insert_final_newline = ignore
+
+# git config --global core.autocrlf input

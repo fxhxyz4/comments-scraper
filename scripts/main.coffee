@@ -7,10 +7,15 @@ do ->
   api.value = localStorage.getItem('API_KEY')
 
   DATE = new Date().toISOString().split('T')[0]
-  TOP_STRING = ""
+  TOP_STRING = ''
+
+  regexShort = /(?:youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/
+  regexVideo = /(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/
 
   API_KEY = ''
   BASE_URL = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&'
+
+  commentAuthors = {}
 
   form.addEventListener 'submit', (e) ->
     e.preventDefault()
@@ -23,7 +28,7 @@ do ->
     include = 'youtube.com'
 
     unless videoUrl.includes(include)
-      console.error('type a valid yt url')
+      console.error('Type a valid yt url')
       return
 
     form.reset()
@@ -67,25 +72,46 @@ do ->
     saveAndDownload()
 
   processThreadComments = (comments) ->
-    topComments = comments.map (i) ->
-      { authorDisplayName, textOriginal, likeCount } = i.snippet.topLevelComment.snippet
-      cleanedText = textOriginal.replace(/\n/g, '')
+    comments.map (i) ->
+      { id, snippet } = i
+      { authorDisplayName, textOriginal, likeCount } = snippet.topLevelComment.snippet
 
-      TOP_STRING += "#{authorDisplayName},#{cleanedText},#{likeCount}"
+      cleanedText = textOriginal.replace(/\n/g, '').replaceAll(",", ". ")
+
+      commentAuthors[id] = {
+        name: authorDisplayName,
+        id: id
+      }
+
+      TOP_STRING += "#{authorDisplayName},#{cleanedText},like: #{likeCount}"
       TOP_STRING += "\n"
 
   processThreadReplies = (replies) ->
-    topReplies = replies.comments.map (i) ->
-      { authorDisplayName, textOriginal, likeCount } = i.snippet
-      cleanedText = textOriginal.replace(/\n/g, '')
+    replies.comments.map (i) ->
+        { authorDisplayName, textOriginal, likeCount, parentId } = i.snippet
+        cleanedText = textOriginal.replace(/\n/g, '').replaceAll(",", ". ")
 
-      TOP_STRING += "#{authorDisplayName},#{cleanedText},#{likeCount}"
-      TOP_STRING += "\n"
+        if commentAuthors[parentId]
+            parentAuthor = commentAuthors[parentId].name
+            parentId = commentAuthors[parentId].id
+        else
+            parentAuthor = 'Undefined'
+            parentId = 'Undefined'
+
+        TOP_STRING += "#{authorDisplayName},#{cleanedText},like: #{likeCount},replyTo: #{parentAuthor},replyId: #{parentId}"
+        TOP_STRING += "\n"
 
   getVideoIdFromUrl = (url) ->
     return new Promise (resolve, reject) ->
-      videoId = new URLSearchParams(new URL(url).search).get('v')
-      resolve(videoId)
+      matchShort = url.match(regexShort)
+      matchVideo = url.match(regexVideo)
+
+      if matchShort && matchShort[1]
+        resolve(matchShort[1])
+      else if matchVideo && matchVideo[1]
+        resolve(matchVideo[1])
+      else
+        reject('Unable to extract video ID from URL')
 
   saveAndDownload = () ->
     filename = "comments-#{DATE}.csv"
