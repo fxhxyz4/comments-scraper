@@ -31,7 +31,8 @@
   "scripts": {
     "prod": "webpack -c ./webpack.config.js --mode='production'",
     "dev": "webpack -c ./webpack.config.js -w --mode='development'",
-    "prettier": "prettier ./scripts/main.coffee --write"
+    "prettier": "prettier ./scripts/main.coffee --write --list-different --cache",
+    "prettier-check": "prettier ./scripts/main.coffee --debug-check"
   },
   "devDependencies": {
     "coffee-loader": "5.0.0",
