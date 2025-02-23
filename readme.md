@@ -39,7 +39,7 @@ npm run prettier && npm run prod
 - **shell**
 
 ```bash
-sudo chmod +x ./build.sh & ./build.sh
+sudo chmod +x ./build.sh && ./build.sh
 ```
 
 - **batch**
@@ -47,12 +47,6 @@ sudo chmod +x ./build.sh & ./build.sh
 ```bash
 ./build.bat
 ```
-
-#
-
-### TODO:
-
-- [x] [comment thread replies](https://stackoverflow.com/questions/31546995/youtube-data-api-v3-commentthread-call-doesnt-give-replies-for-some-comment-th)
 
 #
 
