@@ -1,6 +1,12 @@
-### Comments scraper for youtube.com
+### Comments scraper extension
+
+### _written with coffeescript and webpack_
 
 ### ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/fxhxyz4/comments-scraper) ![GitHub](https://img.shields.io/github/license/fxhxyz4/comments-scraper) ![Website](https://img.shields.io/website?url=https%3A%2F%2Ffxhxyz4.github.io%2Fcomments-scraper) ![GitHub issues](https://img.shields.io/github/issues/fxhxyz4/comments-scraper)
+
+#
+
+### _This extension efficiently extracts comments from youtube videos by leveraging CoffeeScript for concise and readable code and Webpack for optimized bundling._
 
 #
 
