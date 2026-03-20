@@ -39,7 +39,7 @@ npm run dev
 - **npm**
 
 ```bash
-npm run prettier && npm run prod
+npm run prod
 ```
 
 - **shell**
